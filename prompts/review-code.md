@@ -9,11 +9,11 @@ This is a read-only review. Output a report; do not change code. When reviewing 
 
 ## Principles
 
-1. **Every addition must justify its presence.** Anything not explicitly required must serve a requirement or address a failure that can actually occur. This includes validation, fallbacks, retries, configuration, abstractions, tests, and paragraphs of documentation. If you still cannot identify a reason after checking the requirements and call chain, report it. "Just in case," "to be safer," and "we might need it later" are not reasons.
-2. **Defend only at real boundaries.** Do not report necessary defenses: validation of external input (user input, network data, files, third-party APIs), compatibility with published interfaces, or security and data-integrity mechanisms explicitly required by the requirements or existing contracts. Repeated validation between trusted internal calls, and reparsing or revalidating data the program just generated, are excessive. If necessary validation is in the wrong place (inside the program rather than at the boundary), move it to the real boundary.
+1. **Every addition must justify its presence.** Anything not explicitly required must serve the task, preserve an existing contract, or address a failure that can actually occur. This includes validation, fallbacks, retries, configuration, abstractions, tests, and paragraphs of documentation. If you still cannot identify a reason after checking the requirements and call chain, report it. "Just in case," "to be safer," and "we might need it later" are not reasons.
+2. **Require a concrete reason for defensive code.** Do not report necessary defenses: validation of external input (user input, network data, files, third-party APIs), compatibility with published interfaces, or security and data-integrity mechanisms required by the task, existing contracts, or a demonstrated failure path. Report repeated validation between trusted internal calls, or reparsing and revalidating generated data, when the caller already guarantees the property being checked. If necessary validation is in the wrong place (inside the program rather than at the boundary), move it to the real boundary.
 3. **Trace the chain to its root.** One unnecessary design choice often brings a chain of supporting mechanisms: unnecessary serialization → format validation → defaults → recovery branches → tests. Report the whole chain and identify its starting point, rather than reporting each component separately.
 4. **Static reasoning is enough.** If the code and call relationships establish that a branch is unreachable or a fallback swallows errors, report it. You do not need to wait for a reproduction or an incident.
-5. **Do not propose more defenses as the fix.** The available remedies are removal, inlining, consolidation, moving validation to the real boundary, raising an error directly, or fixing the root cause. Mark decisions that belong to the user as "Needs user confirmation." Do not compromise by suggesting more tests, logging, or comments unless they replace a heavier mechanism.
+5. **Fix the cause without adding unrelated mechanisms.** The available remedies are removal, inlining, consolidation, moving validation to the real boundary, raising an error directly, or fixing the root cause. Mark decisions that belong to the user as "Needs user confirmation." Do not suggest more tests, logging, or comments merely to appease a reviewer. Each proposed addition must serve the task, preserve a contract, address a real failure, or replace a heavier mechanism.
 6. Do not report style preferences. More lines, more tests, or "it looks AI-written" are not problems in themselves.
 
 ## What to look for
@@ -41,10 +41,10 @@ Mark each finding "Remove" or "Needs user confirmation." Do not decide what the 
 - Tests for added defenses (such as proving a fallback branch can be triggered) rather than the original behavior
 - Tests tied to implementation details: log text, mock call counts, private functions
 - Test volume disproportionate to the change; repeated tests of the same behavior
-- Code tests added for changes only to documentation, wording, or configuration
+- Tests added for documentation, wording, or configuration changes without identifying a behavior or contract they verify
 - Test expectations or interface contracts changed solely to satisfy a checker or reviewer, with no supporting requirement or contract change
 
-The test: would removing this test leave a supported behavior uncovered? If not, report it.
+The test: does this test cover a supported behavior, required contract, or real failure that the remaining tests do not cover? If not, report it.
 
 ### D. Defensive wording in documentation and output
 - Unsupported disclaimers, caveats, "notes," or "safety warnings"
@@ -59,7 +59,7 @@ Report only redundancy established by the code structure. Do not invent timing f
 
 ### F. Work process (only when execution logs are provided)
 - Mechanical repetition split into many small rounds when one command or script could do it in bulk
-- Running the full test suite after each change instead of completing related changes and verifying them together
+- Running the full test suite after each change with no diagnostic or workflow reason, instead of verifying related changes together
 - Rereading the same material; repeatedly confirming matters already settled
 - Expanding scope without asking the user (see B)
 - Accepting false positives from automated reviews or linters without checking them, adding code to work around them, or making a change despite recognizing the finding as a false positive
