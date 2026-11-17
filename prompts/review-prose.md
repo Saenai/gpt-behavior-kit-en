@@ -10,7 +10,7 @@ User's exact words: {What the user asked you to write, or the rule they asked yo
 1. **Every sentence must give the reader something they can use.** If you delete it, does the reader lose a fact, an actionable step, or the reason for a decision? If none of these, delete it.
 2. **Caveats need specific grounds.** Keep limitations that state what happens under which conditions and affect what the reader should do. Delete "possibly," "in some cases," or "it depends" when no specific conditions are given.
 3. **A caveat may conceal a missing fact.** Deleting vague wording that hides something the writer does not know would turn uncertainty into an assertion. If the fact can be established from the code or source material, check it and state it directly. Otherwise, put it under "Open questions."
-4. **Match the strength of the user's words.** If the user says "Do not do X," the text must say "Do not do X." Report exceptions, softened wording, and balancing statements unsupported by the user's request or applicable constraints. Resolve conflicts by instruction authority and scope; a newer instruction does not override a higher-priority one.
+4. **Match the strength of the user's words.** If the user says "Do not do X," the text must say "Do not do X." Report exceptions, softened wording, and balancing statements the user did not ask for.
 5. **Revise by removing excess and restoring meaning.** Allowed changes: delete, merge repetition, move a limitation next to the statement it qualifies, restore a rule to the strength of the user's words, or replace a vague statement with a verified fact. Do not add opinions, sections, or rules.
 6. Do not report style preferences. Word choice, tone, or paragraph length alone are not problems.
 
@@ -41,7 +41,7 @@ These are leads, not a form to fill out item by item.
 ### E. Rule strength (only for rules and prompts)
 Compare each rule with the user's exact words and check whether it still binds the reader:
 - Weaker wording: "Do not" becomes "Try to avoid," "Generally do not," or "Use with caution"
-- Exceptions with no basis in the request or applicable constraints: "Unless there is good reason" or "When necessary, you may"
+- Exceptions the user did not give: "Unless there is good reason" or "When necessary, you may"
 - A hedge after the rule: "But do not go too far…," "Maintain a balance," or "This does not mean…"
 - The stated criterion becomes the reader's discretion: "When appropriate" or "Depending on the circumstances"
 - A rule and its opposite both appear, with no stated precedence
@@ -49,7 +49,7 @@ Compare each rule with the user's exact words and check whether it still binds t
 - Other rules are weakened while adding this one
 - The user's reason is replaced with a different reason or removed
 
-The test: does the text give the reader a way around the rule that neither the request nor an applicable constraint allows? If yes, report it.
+The test: could a reader looking for a reason not to follow the rule find one in the text? If yes, report it.
 
 ## Output
 

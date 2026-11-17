@@ -6,7 +6,7 @@ Instructions and prompts for five recurring habits in GPT models: padding replie
 
 | File | For | How to use it |
 |---|---|---|
-| `AGENTS.md` | The working agent, loaded throughout the task | Add to `~/.codex/AGENTS.md` for global use, or to a project’s `AGENTS.md` |
+| `AGENTS.md` | The working agent, loaded throughout the task | Copy to `~/.codex/AGENTS.md` for global use, or to a project root |
 | `prompts/task-prefix.md` | Individual tasks and subagents | Prepend to the task description when the agent cannot read AGENTS.md |
 | `prompts/review-prose.md` | A reviewer | Review agent-written documents, reports, and rules; produce a revised draft |
 | `prompts/review-code.md` | A reviewer | Review delivered code changes for overdefensive design; produce a report |
