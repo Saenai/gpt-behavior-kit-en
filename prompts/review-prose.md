@@ -3,15 +3,16 @@
 Review text written by an AI agent: documentation, reports, rules, or prompts. Two problems are common. First, low information density: caveats, repetition, and rebuttals to claims nobody made take up most of the text. Second, and more damaging in rules, hedges and exceptions cancel out the rule the user wanted, giving the model a reason not to follow it. The output of this review is a revised draft.
 
 Review target: {file / diff / pasted text. For a diff, review only added and changed text.}
-User's exact words: {What the user asked you to write, or the rule they asked you to add. Required when reviewing rules and prompts. If unavailable, review only A–D and put "User's exact words not provided; rule strength not checked" on the first line of the report.}
+User's exact words: {What the user asked you to write, or the rule they asked you to add. Required when reviewing rules and prompts. If unavailable, skip E and put "User's exact words not provided; rule strength not checked" on the first line of the report.}
+Source file: {When the text under review is a translation, rewrite, reorganization, or merge of an existing rules file, provide the version before the change. If unavailable, skip F.}
 
 ## Principles
 
 1. **Every sentence must give the reader something they can use.** If you delete it, does the reader lose a fact, an actionable step, or the reason for a decision? If none of these, delete it.
 2. **Caveats need specific grounds.** Keep limitations that state what happens under which conditions and affect what the reader should do. Delete "possibly," "in some cases," or "it depends" when no specific conditions are given.
 3. **A caveat may conceal a missing fact.** Deleting vague wording that hides something the writer does not know would turn uncertainty into an assertion. If the fact can be established from the code or source material, check it and state it directly. Otherwise, put it under "Open questions."
-4. **Match the strength of the user's words.** If the user says "Do not do X," the text must say "Do not do X." Report exceptions, softened wording, and balancing statements the user did not ask for.
-5. **Revise by removing excess and restoring meaning.** Allowed changes: delete, merge repetition, move a limitation next to the statement it qualifies, restore a rule to the strength of the user's words, or replace a vague statement with a verified fact. Do not add opinions, sections, or rules.
+4. **Match the strength of the user's words.** If the user says "Do not do X," the text must say "Do not do X." Report exceptions, softened wording, and balancing statements the user did not ask for. When a source file is provided, the source file sets the strength of every rule the user's words did not name for change.
+5. **Revise by removing excess and restoring meaning.** Allowed changes: delete, merge repetition, move a limitation next to the statement it qualifies, restore a rule to the strength of the user's words, restore from the source file any rule, reason, or example the text under review dropped or changed, or replace a vague statement with a verified fact. Do not add opinions, sections, or rules.
 6. Do not report style preferences. Word choice, tone, or paragraph length alone are not problems.
 
 ## What to look for
@@ -51,13 +52,25 @@ Compare each rule with the user's exact words and check whether it still binds t
 
 The test: could a reader looking for a reason not to follow the rule find one in the text? If yes, report it.
 
+### F. Comparison with the source file (only when a source file is provided)
+Match the source file's rules one by one against the text under review. Changes the user's words named are not findings. Every other difference is:
+- A rule in the source file is absent from the text under review
+- The strength differs: "Do not" becomes "Try to avoid," or "only when…" becomes "include when…"
+- A reason is removed or replaced with a different reason
+- An example is removed or replaced with an abstract summary
+- Rules, exceptions, or qualifications appear that the source file does not have
+- A specific criterion becomes the reader's discretion
+- Several rules are merged, and the meaning of one narrows or disappears
+
+The test: would a reader of only the text under review act differently from a reader of only the source file? If yes, and the user's words did not ask for that difference, report it.
+
 ## Output
 
-First line: review scope, whether you checked against the user's exact words, and the conclusion ("N passages removed or revised" or "No changes needed").
+First line: review scope, whether you checked against the user's exact words and the source file, and the conclusion ("N passages removed or revised" or "No changes needed").
 
 Then provide the full revised draft. For a diff, provide the revised portions of the changes.
 
-After the draft, list "Rule strength" findings, if any. One line each: original → revision → corresponding words from the user.
+After the draft, list "Rule strength" findings, if any. One line each: original → revision → corresponding words from the user or sentence from the source file. List findings from both E and F here.
 
 End with "Open questions" only if needed: facts behind vague statements that could not be established. State which fact is missing in each item.
 

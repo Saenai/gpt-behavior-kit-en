@@ -8,16 +8,19 @@ Instructions and prompts for five recurring habits in GPT models: padding replie
 |---|---|---|
 | `AGENTS.md` | The working agent, loaded throughout the task | Copy to `~/.codex/AGENTS.md` for global use, or to a project root |
 | `prompts/task-prefix.md` | Individual tasks and subagents | Prepend to the task description when the agent cannot read AGENTS.md |
-| `prompts/review-prose.md` | A reviewer | Review agent-written documents, reports, and rules; produce a revised draft |
+| `prompts/rules-prefix.md` | Individual rule-writing tasks and subagents | Prepend to tasks that write or edit AGENTS.md, a prompt, or a specification |
+| `prompts/review-prose.md` | A reviewer | Review agent-written documents, reports, and rules; produce a revised draft. With a source file, compare a translation or rewrite rule by rule |
 | `prompts/review-code.md` | A reviewer | Review delivered code changes for overdefensive design; produce a report |
 | `prompts/creative-prefix.md` | Individual creative tasks and subagents | Prepend to requests for stories, dialogue, character voice, copy, naming, or interpretation |
 | `prompts/review-creative.md` | A reviewer | Review creative drafts and persona prompts; report findings without rewriting |
+| `tests/probes.md` | You | Eight fixed prompts with pass criteria, for checking whether the kit works on a given model |
 
 ## Using them together
 
 - For everyday work, keep `AGENTS.md` loaded.
 - When assigning a subagent, prepend `task-prefix.md` to its task. This supplies the core instructions when the subagent does not have the main agent’s AGENTS.md in its context.
-- After an agent edits AGENTS.md or writes a prompt, review it with `review-prose.md`. Fill in “User's exact words” with your actual request. This check catches rules that have been weakened or canceled out.
+- After an agent edits AGENTS.md or writes a prompt, review it with `review-prose.md`. Fill in “User's exact words” with your actual request. This check catches rules that have been weakened or canceled out. When a subagent writes the rules, prepend `rules-prefix.md` to its task.
+- After an agent translates, rewrites, or reorganizes a rules file, use `review-prose.md` and put the version before the change in “Source file.”
 - After code is delivered, use `review-code.md`.
 - For creative work, keep the “Creative work” section of `AGENTS.md` loaded. Prepend `creative-prefix.md` for subagents or agents that cannot read AGENTS.md. Include any source text, samples, or earlier drafts: that is where the voice comes from.
 - After a creative draft is delivered, use `review-creative.md`. Fill in “Reference material” with the source text or samples you supplied. Use the report’s “Missing from the brief” section to improve the next task description.
@@ -25,4 +28,4 @@ Instructions and prompts for five recurring habits in GPT models: padding replie
 
 ## Editing this repository
 
-When GPT edits files in this repository, the root `AGENTS.md` applies. Its “Rules and instructions” section governs how the changes are written. Review the result with `review-prose.md`.
+When GPT edits files in this repository, the root `AGENTS.md` applies. Its “Rules and instructions” section governs how the changes are written. Review the result with `review-prose.md`, then rerun the probes in `tests/probes.md`.
