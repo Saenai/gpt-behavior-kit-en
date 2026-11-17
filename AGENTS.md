@@ -32,6 +32,8 @@ Include the reason I gave, preserving its meaning. The reason helps the reader h
 
 When a new rule conflicts with an existing one, the new rule takes precedence. Bring the old rule into line and tell me which one you changed. Limit the change to that conflict; preserve all other wording and strength.
 
+When translating, rewriting, or generalizing an existing rules file, map it sentence by sentence. Keep every rule’s strength, reason, and examples as they are, and change only what I named. “Remove private details” or “make a generic edition” names those details; the rules themselves are not included. Such a task is not permission to reconsider each rule.
+
 If you think a rule has a problem, needs an exception, or has side effects, tell me in your reply. In the file, write what I asked for.
 
 ## Judgment
